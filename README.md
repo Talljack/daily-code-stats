@@ -5,7 +5,7 @@ A Nodejs script to count your codes today, and it will update on your README.md
 # Usage
 
 ```yml
-name: Example Workflow
+name: daily-code-stats
 on:
   schedule:
     - cron: '0 0 * * *'  # 每天运行一次
