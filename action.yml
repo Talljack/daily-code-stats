@@ -1,0 +1,11 @@
+name: 'Daily Codes'
+description: 'To record my daily codes'
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub Token'
+    required: true
+    default: '${{ secrets.GITHUB_TOKEN }}'
+
+runs:
+  using: 'node16'
+  main: 'index.js'

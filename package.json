@@ -1,0 +1,20 @@
+{
+  "name": "codes-count",
+  "module": "index.ts",
+  "devDependencies": {
+    "@types/node": "^20.9.1",
+    "bun-types": "latest",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "fs-extra": "^11.1.1",
+    "moment": "^2.29.4",
+    "octokit": "^3.1.2"
+  }
+}
