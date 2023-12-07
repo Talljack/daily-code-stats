@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "lib",
     "lib": ["ESNext"],
     "module": "esnext",
     "target": "esnext",
@@ -16,8 +18,7 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "moduleResolution": "node",
-    "types": [
-      "bun-types" // add Bun global
-    ]
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "lib"]
 }
