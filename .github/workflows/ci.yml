@@ -22,10 +22,9 @@ jobs:
         node-version: '18'
 
     - name: Daily Codes Stats
-      run: |
-        node lib/index.js
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      uses: Talljack/daily-code-stats@main
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Commit files
       id: commit-files
