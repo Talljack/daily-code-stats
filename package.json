@@ -1,6 +1,7 @@
 {
   "name": "codes-count",
   "private": "true",
+  "version": "1.0.5",
   "description": "Count the number of lines of code of user",
   "main": "lib/index.js",
   "module": "src/index.ts",

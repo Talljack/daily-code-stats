@@ -6,5 +6,10 @@ export default defineConfig({
   sourcemap: false,
   clean: true,
   format: ['cjs'],
-  outDir: 'lib'
+  outDir: 'lib',
+  noExternal: [
+    "moment",
+    "@actions/core",
+    "@actions/github",
+  ]
 })
