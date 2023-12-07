@@ -25,9 +25,6 @@ jobs:
       run:
         node lib/index.js
 
-      env:
-        token: ${{secrets.GITHUB_TOKEN}}  # 使用存储在仓库 Secrets 中的 GitHub 令牌
-
     - name: Commit files
       id: commit-files
       run: |
