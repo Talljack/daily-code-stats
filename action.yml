@@ -1,6 +1,7 @@
-name: 'Daily Codes Statistic'
+name: 'Daily Codes Stats'
 author: "Talljack"
 description: 'To record my daily codes'
+
 inputs:
   token:
     description: 'Your GITHUB_TOKEN'
@@ -14,3 +15,6 @@ runs:
   using: 'node16'
   main: 'lib/index.js'
 
+branding:
+  icon: 'code'
+  color: 'green'
