@@ -30,6 +30,7 @@ class Generator {
     let user = context.actor;
     if (!user) setFailed('owner name does not exist!');
     this.owner = user;
+    console.log('processs', process)
     const token = process.env.TOKEN || getInput('token');
     if (!token) setFailed('token does not exist!');
     this.token = token;
