@@ -41,12 +41,12 @@ class Generator {
 
   async getUserDailyCodeInfo() {
     const octokit = getOctokit(this.token);
-    const currentDate = moment().format("YYYY-MM-DD");
+    const prevDate = moment().subtract(1, 'days').format("YYYY-MM-DD");
     const username = this.owner;
     const startDate =  moment().subtract(1, 'days').format('YYYY-MM-DD');
     const endDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
     let dailyCodeChanges = {
-      [currentDate]: { additions: 0, deletions: 0 },
+      [prevDate]: { additions: 0, deletions: 0 },
     } as DailyCodeInfo['dailyCodeChanges'];
     try {
       let page = 1;

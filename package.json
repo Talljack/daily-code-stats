@@ -1,8 +1,8 @@
 {
   "name": "codes-count",
   "private": "true",
-  "version": "1.0.5",
-  "description": "Count the number of lines of code of user",
+  "version": "1.0.6",
+  "description": "Your daily codes statistics",
   "main": "lib/index.js",
   "module": "src/index.ts",
   "scripts": {
