@@ -22,8 +22,10 @@ jobs:
         node-version: '18'
 
     - name: Daily Codes Stats
-      run:
-        node lib/index.js --token ${{secrets.GITHUB_TOKEN}}
+      run: |
+        node lib/index.js
+      env:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Commit files
       id: commit-files
