@@ -43,7 +43,7 @@ Usually, you can add this action to your homepage repo, and it will update your 
 
 ## Inputs
 
-- `token` - Your `GITHUB_TOKEN`. This is required. Why do we need `token`? Read more here: [About the GITHUB_TOKEN secret](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret). Default: `${{ github.token }}`
+- `token` - Your `GITHUB_TOKEN`. This is required. Why do we need a `token`? Read more here: [About the GITHUB_TOKEN secret](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret). Default: `${{ github.token }}`
 
 ## Outputs
 
