@@ -62,3 +62,13 @@ Usually, you can add this action to your homepage repo, and it will update your 
 ## License
 
 Licensed under the [MIT License](LICENSE).
+
+<!-- START_STATS -->
+
+## Talljack Daily Code Statistics
+
+| Date       | Addition Codes | Deletion Codes |
+|------------|-----------|-----------|
+| 2023-12-06 | 66 | 66 |
+
+<!-- END_STATS -->
