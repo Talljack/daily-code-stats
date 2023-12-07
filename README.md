@@ -1,4 +1,4 @@
-# Daily Codes
+# Daily Codes Statistic
 
 A Nodejs script to count your daily codes, and it will auto-update daily code statistics on your README.md
 
