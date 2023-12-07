@@ -31,7 +31,7 @@ class Generator {
     if (!user) setFailed('owner name does not exist!');
     this.owner = user;
     console.log('processs', process)
-    const token = process.env.TOKEN || getInput('token');
+    const token = process.env.GITHUB_TOKEN || getInput('token');
     if (!token) setFailed('token does not exist!');
     this.token = token;
     this.dailyCodeInfo = {
