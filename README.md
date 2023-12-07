@@ -21,6 +21,7 @@ jobs:
       with:
         node-version: '18'
 
+
     - name: Daily Codes Stats
       uses: Talljack/daily-code-stats@v1.0.3
 
