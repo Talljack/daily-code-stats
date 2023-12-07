@@ -1,11 +1,16 @@
 name: 'Daily Codes'
+author: "Talljack"
 description: 'To record my daily codes'
 inputs:
-  GITHUB_TOKEN:
-    description: 'GitHub Token'
-    required: true
-    default: '${{ secrets.GITHUB_TOKEN }}'
+  token:
+    description: 'Your GITHUB_TOKEN'
+    required: false
+    default: '${{ github.token }}'
+outputs:
+  dailyCodeInfo:
+    description: 'Daily Code Info include username, date, and code'
 
 runs:
   using: 'node16'
-  main: 'index.js'
+  main: 'lib/index.js'
+
