@@ -23,7 +23,7 @@ jobs:
 
 
     - name: Daily Codes Stats
-      uses: Talljack/daily-code-stats@v1.0.3
+      uses: Talljack/daily-code-stats@main
 
       env:
         token: ${{secrets.GITHUB_TOKEN}}  # 使用存储在仓库 Secrets 中的 GitHub 令牌
