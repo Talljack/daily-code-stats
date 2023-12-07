@@ -120,7 +120,7 @@ class Generator {
     // 替换旧的统计数据
     const start = readmeContent.indexOf(startMarker);
     const end = readmeContent.indexOf(endMarker);
-
+    console.log('statsContent', statsContent)
     if (start !== -1 && end !== -1) {
       readmeContent =
         readmeContent.substring(0, start + startMarker.length) +
@@ -142,6 +142,7 @@ class Generator {
 async function main() {
   const generator = new Generator();
   const dailyCodeInfo = await generator.getUserDailyCodeInfo();
+  console.log('dailyCodeInfo', dailyCodeInfo)
   setOutput('dailyCodeInfo', JSON.stringify(dailyCodeInfo));
   // 格式化输出并更新 README.md
   generator.updateReadme(dailyCodeInfo);

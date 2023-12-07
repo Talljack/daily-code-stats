@@ -18,7 +18,8 @@ jobs:
         node-version: '18'
 
     - name: Daily Codes Stats
-      uses: Talljack/daily-code-stats@main
+      run:
+        node lib/index.js
 
       env:
         token: ${{secrets.GITHUB_TOKEN}}  # 使用存储在仓库 Secrets 中的 GitHub 令牌
