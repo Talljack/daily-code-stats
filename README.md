@@ -1,6 +1,8 @@
 # Daily Codes Stats
 
-A Nodejs script to count your daily codes, and it will auto-update daily code stats on your README.md
+A Nodejs script to count your daily codes, and it will auto-update daily code stats on your README.md.
+
+You can use this action to your homepage repo, and it will update your README.md every day. Example: [Talljack](https://github.com/Talljack/Talljack/blob/main/.github/workflows/code-stats.yml)
 
 ## Usage
 
