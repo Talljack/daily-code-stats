@@ -69,6 +69,6 @@ Licensed under the [MIT License](LICENSE).
 
 | Date       | Addition Codes | Deletion Codes |
 |------------|-----------|-----------|
-| 2023-12-10 | <font color="Hotpink">224</font> | <font color="Pink">223</font> |
+| 2023-12-10 | 224 | 223 |
 
 <!-- END_STATS -->
