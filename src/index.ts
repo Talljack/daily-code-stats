@@ -23,9 +23,9 @@ const getUserInputs = () => {
   const additionCodeLabel = getInput('additionCodeLabel');
   const deletionCodeLabel = getInput('deletionCodeLabel');
   const startDate =
-    getInput('startDate') ?? moment().subtract(1, 'days').format('YYYY-MM-DD');
+    getInput('startDate') || moment().subtract(1, 'days').format('YYYY-MM-DD');
   const endDate =
-    getInput('endDate') ?? moment().subtract(1, 'days').format('YYYY-MM-DD');
+    getInput('endDate') || moment().subtract(1, 'days').format('YYYY-MM-DD');
   return {
     additionCodeColor,
     deletionCodeColor,
