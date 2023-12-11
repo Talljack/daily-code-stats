@@ -27,7 +27,7 @@ class Generator {
     deletions: 0,
   }
   constructor() {
-    let user = context.actor;
+    const user = context.actor;
     if (!user) setFailed('owner name does not exist!');
     this.owner = user;
     const token = getInput('token');
@@ -46,7 +46,7 @@ class Generator {
     const username = this.owner;
     const startDate =  moment().subtract(1, 'days').format('YYYY-MM-DD');
     const endDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
-    let dailyCodeChanges = {
+    const dailyCodeChanges = {
       [prevDate]: { additions: 0, deletions: 0 },
     } as DailyCodeInfo['dailyCodeChanges'];
     try {
@@ -57,13 +57,13 @@ class Generator {
           username,
           page
         })
-        for (let event of response.data as PushEvent[]) {
+        for (const event of response.data as PushEvent[]) {
           if (event.type === "PushEvent") {
-            let eventDate = moment(event.created_at);
+            const eventDate = moment(event.created_at);
             if (eventDate.isBetween(startDate, endDate, "day", "[]")) {
               const dateStr = eventDate.format("YYYY-MM-DD");
               // @ts-ignore
-              for (let commit of event.payload.commits) {
+              for (const commit of event.payload.commits) {
                 const commitData = await octokit.request('GET /repos/{owner}/{repo}/commits/{ref}', {
                   owner: event.repo.name.split('/')[0],
                   repo: event.repo.name.split('/')[1],
@@ -151,5 +151,5 @@ async function main() {
 try {
   main();
 } catch (error) {
-  setFailed(`${(error as any).message} -> ${error}`)
+  setFailed(`${(error as unknown).message} -> ${error}`)
 }
