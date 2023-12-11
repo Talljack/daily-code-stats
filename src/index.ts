@@ -17,7 +17,7 @@ export type DailyCodeInfo = {
   dailyCodeChanges: Record<string, DailyCodeChange>;
 };
 
-const getUserInput = () => {
+const getUserInputs = () => {
   const additionCodeColor = getInput('additionCodeColor');
   const deletionCodeColor = getInput('deletionCodeColor');
   const additionCodeLabel = getInput('additionCodeLabel');
@@ -40,7 +40,7 @@ class Generator {
   token: string;
   owner: string;
 
-  userOptions = getUserInput();
+  userOptions: ReturnType<typeof getUserInputs>;
 
   dailyCodeInfo: DailyCodeInfo;
 
@@ -60,11 +60,13 @@ class Generator {
       username: this.owner,
       dailyCodeChanges: {},
     };
+    this.userOptions = getUserInputs();
   }
 
   async getUserDailyCodeInfo() {
     const octokit = getOctokit(this.token);
     const prevDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    console.log('userOptions', this.userOptions)
     const username = this.owner;
     const startDate = this.userOptions.startDate;
     const endDate = this.userOptions.endDate;
