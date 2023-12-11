@@ -7,14 +7,6 @@ inputs:
     description: 'Your GITHUB_TOKEN'
     required: false
     default: '${{ github.token }}'
-  additionCodeColor:
-    description: 'The color of addition code'
-    required: false
-    default: 'green'
-  deletionCodeColor:
-    description: 'The color of deletion code'
-    required: false
-    default: 'red'
   additionCodeLabel:
     description: 'The label of addition code'
     required: false
