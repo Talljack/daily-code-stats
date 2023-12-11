@@ -17,9 +17,30 @@ export type DailyCodeInfo = {
   dailyCodeChanges: Record<string, DailyCodeChange>;
 };
 
+const getUserInputs = () => {
+  const additionCodeColor = getInput('additionCodeColor');
+  const deletionCodeColor = getInput('deletionCodeColor');
+  const additionCodeLabel = getInput('additionCodeLabel');
+  const deletionCodeLabel = getInput('deletionCodeLabel');
+  const startDate =
+    getInput('startDate') ?? moment().subtract(1, 'days').format('YYYY-MM-DD');
+  const endDate =
+    getInput('endDate') ?? moment().subtract(1, 'days').format('YYYY-MM-DD');
+  return {
+    additionCodeColor,
+    deletionCodeColor,
+    additionCodeLabel,
+    deletionCodeLabel,
+    startDate,
+    endDate,
+  };
+};
+
 class Generator {
   token: string;
   owner: string;
+
+  userOptions: ReturnType<typeof getUserInputs>;
 
   dailyCodeInfo: DailyCodeInfo;
 
@@ -39,14 +60,16 @@ class Generator {
       username: this.owner,
       dailyCodeChanges: {},
     };
+    this.userOptions = getUserInputs();
   }
 
   async getUserDailyCodeInfo() {
     const octokit = getOctokit(this.token);
     const prevDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    console.log('userOptions', this.userOptions)
     const username = this.owner;
-    const startDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
-    const endDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    const startDate = this.userOptions.startDate;
+    const endDate = this.userOptions.endDate;
     const dailyCodeChanges = {
       [prevDate]: { additions: 0, deletions: 0 },
     } as DailyCodeInfo['dailyCodeChanges'];
@@ -111,11 +134,11 @@ class Generator {
     }
     // 构建新的统计数据部分
     let statsContent = `## ${dailyCodeInfo.username} Daily Code Statistics\n\n`;
-    statsContent += '| Date       | Addition Codes | Deletion Codes |\n';
+    statsContent += `| Date       | ${this.userOptions.additionCodeLabel} | ${this.userOptions.deletionCodeLabel} |\n`;
     statsContent += '|------------|-----------|-----------|\n';
 
     Object.entries(dailyCodeInfo.dailyCodeChanges).forEach(([date, stats]) => {
-      statsContent += `| ${date} | ${stats.additions} | ${stats.deletions} |\n`;
+      statsContent += `| ${date} | <font color="${this.userOptions.additionCodeColor}">${stats.additions}</font> | <font color="${this.userOptions.deletionCodeColor}">${stats.deletions}</font> |\n`;
     });
 
     // 标记统计数据的开始和结束
@@ -155,5 +178,5 @@ async function main() {
 try {
   main();
 } catch (error) {
-  setFailed(`${(error as unknown).message} -> ${error}`);
+  setFailed(`${(error as unknown as { message: string }).message} -> ${error}`);
 }
