@@ -12,7 +12,7 @@ outputs:
     description: 'Daily Code Info include username, date, and code'
 
 runs:
-  using: 'node18'
+  using: 'node20'
   main: 'lib/index.js'
 
 branding:
