@@ -18,8 +18,6 @@ export type DailyCodeInfo = {
 };
 
 const getUserInputs = () => {
-  const additionCodeColor = getInput('additionCodeColor');
-  const deletionCodeColor = getInput('deletionCodeColor');
   const additionCodeLabel = getInput('additionCodeLabel');
   const deletionCodeLabel = getInput('deletionCodeLabel');
   const startDate =
@@ -27,8 +25,6 @@ const getUserInputs = () => {
   const endDate =
     getInput('endDate') || moment().subtract(1, 'days').format('YYYY-MM-DD');
   return {
-    additionCodeColor,
-    deletionCodeColor,
     additionCodeLabel,
     deletionCodeLabel,
     startDate,
@@ -66,7 +62,6 @@ class Generator {
   async getUserDailyCodeInfo() {
     const octokit = getOctokit(this.token);
     const prevDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
-    console.log('userOptions', this.userOptions)
     const username = this.owner;
     const startDate = this.userOptions.startDate;
     const endDate = this.userOptions.endDate;
@@ -138,7 +133,7 @@ class Generator {
     statsContent += '|------------|-----------|-----------|\n';
 
     Object.entries(dailyCodeInfo.dailyCodeChanges).forEach(([date, stats]) => {
-      statsContent += `| ${date} | <font color="${this.userOptions.additionCodeColor}">${stats.additions}</font> | <font color="${this.userOptions.deletionCodeColor}">${stats.deletions}</font> |\n`;
+      statsContent += `| ${date} | ${stats.additions} | ${stats.deletions} |\n`;
     });
 
     // 标记统计数据的开始和结束
