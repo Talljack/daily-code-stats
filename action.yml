@@ -7,6 +7,28 @@ inputs:
     description: 'Your GITHUB_TOKEN'
     required: false
     default: '${{ github.token }}'
+  additionCodeColor:
+    description: 'The color of addition code'
+    required: false
+    default: 'green'
+  deletionCodeColor:
+    description: 'The color of deletion code'
+    required: false
+    default: 'red'
+  additionCodeLabel:
+    description: 'The label of addition code'
+    required: false
+    default: 'Addition Codes'
+  deletionCodeLabel:
+    description: 'The label of deletion code'
+    required: false
+    default: 'Deletion Codes'
+  startDate:
+    description: 'The start date of the daily code stats'
+    required: false
+  endDate:
+    description: 'The end date of the daily code stats'
+    required: false
 outputs:
   dailyCodeInfo:
     description: 'Daily Code Info include username, date, and code'
