@@ -10,43 +10,41 @@ You can use this action to your homepage repo, and it will update your README.md
 name: daily-code-stats
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天运行一次
+    - cron: '0 0 * * *' # 每天运行一次
 jobs:
   daily-code-stats:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
+      - name: Daily Codes Stats
+        uses: Talljack/daily-code-stats@main
 
+        env:
+          token: ${{secrets.GITHUB_TOKEN}} # 使用存储在仓库 Secrets 中的 GitHub 令牌
 
-    - name: Daily Codes Stats
-      uses: Talljack/daily-code-stats@main
+      - name: Commit files
+        id: commit-files
+        run: |
+          if [ -n "$(git status --porcelain README.md)" ]; then
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git add README.md
+            git commit -m "Update README.md"
+            echo "hasChange=true" >> $GITHUB_OUTPUT
+          else
+            echo "No Changes"
+          fi
 
-      env:
-        token: ${{secrets.GITHUB_TOKEN}}  # 使用存储在仓库 Secrets 中的 GitHub 令牌
-
-    - name: Commit files
-      id: commit-files
-      run: |
-        if [ -n "$(git status --porcelain README.md)" ]; then
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add README.md
-          git commit -m "Update README.md"
-          echo "hasChange=true" >> $GITHUB_OUTPUT
-        else
-          echo "No Changes"
-        fi
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      if: ${{ steps.commit-files.outputs.hasChange == 'true' }}
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        if: ${{ steps.commit-files.outputs.hasChange == 'true' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
 ```
 
 Usually, you can add this action to your homepage repo, and it will update your README.md every day.
@@ -64,12 +62,13 @@ Usually, you can add this action to your homepage repo, and it will update your 
 ## License
 
 Licensed under the [MIT License](LICENSE).
+
 <!-- START_STATS -->
 
 ## Talljack Daily Code Statistics
 
 | Date       | Addition Codes | Deletion Codes |
-|------------|-----------|-----------|
-| 2023-12-10 | 224 | 223 |
+| ---------- | -------------- | -------------- |
+| 2023-12-10 | 224            | 223            |
 
 <!-- END_STATS -->

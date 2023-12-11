@@ -1,5 +1,5 @@
 name: 'Daily Codes Stats'
-author: "Talljack"
+author: 'Talljack'
 description: 'To record my daily codes'
 
 inputs:
@@ -12,7 +12,7 @@ outputs:
     description: 'Daily Code Info include username, date, and code'
 
 runs:
-  using: 'node16'
+  using: 'node18'
   main: 'lib/index.js'
 
 branding:
