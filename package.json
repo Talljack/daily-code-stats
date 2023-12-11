@@ -1,7 +1,7 @@
 {
   "name": "codes-count",
   "private": "true",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Your daily codes statistics",
   "main": "lib/index.js",
   "module": "src/index.ts",
