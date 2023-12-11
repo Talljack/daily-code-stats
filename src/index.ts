@@ -22,8 +22,10 @@ const getUserInput = () => {
   const deletionCodeColor = getInput('deletionCodeColor');
   const additionCodeLabel = getInput('additionCodeLabel');
   const deletionCodeLabel = getInput('deletionCodeLabel');
-  const startDate = getInput('startDate') ?? moment().subtract(1, 'days').format('YYYY-MM-DD');
-  const endDate = getInput('endDate') ?? moment().subtract(1, 'days').format('YYYY-MM-DD');
+  const startDate =
+    getInput('startDate') ?? moment().subtract(1, 'days').format('YYYY-MM-DD');
+  const endDate =
+    getInput('endDate') ?? moment().subtract(1, 'days').format('YYYY-MM-DD');
   return {
     additionCodeColor,
     deletionCodeColor,
@@ -32,7 +34,7 @@ const getUserInput = () => {
     startDate,
     endDate,
   };
-}
+};
 
 class Generator {
   token: string;
