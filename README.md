@@ -68,7 +68,7 @@ Licensed under the [MIT License](LICENSE).
 ## Talljack Daily Code Statistics
 
 | Date       | Addition Codes | Deletion Codes |
-|------------|-----------|-----------|
-| 2024-02-24 | 475 | 196 |
+| ---------- | -------------- | -------------- |
+| 2024-02-24 | 475            | 196            |
 
 <!-- END_STATS -->
