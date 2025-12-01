@@ -28,7 +28,9 @@ const getUserInputs = () => {
   const defaultDate = now.clone().subtract(1, 'days').format('YYYY-MM-DD');
   const startDate = getInput('startDate') || defaultDate;
   const endDate = getInput('endDate') || defaultDate;
-  console.log(`Timezone offset: UTC+${timezoneOffset}, Current time: ${now.format('YYYY-MM-DD HH:mm:ss')}, Target date: ${defaultDate}`);
+  console.log(
+    `Timezone offset: UTC+${timezoneOffset}, Current time: ${now.format('YYYY-MM-DD HH:mm:ss')}, Target date: ${defaultDate}`,
+  );
   return {
     additionCodeLabel,
     deletionCodeLabel,
@@ -88,19 +90,61 @@ class Generator {
             if (eventDate.isBetween(startDate, endDate, 'day', '[]')) {
               const dateStr = eventDate.format('YYYY-MM-DD');
               // @ts-ignore
-              const commits = event.payload?.commits;
-              // Skip if commits is not an array or is empty
+              const payload = event.payload;
+              const repoOwner = event.repo.name.split('/')[0];
+              const repoName = event.repo.name.split('/')[1];
+
+              // Try to get commits from payload first, otherwise use compare API
+              // @ts-ignore
+              let commits = payload?.commits as
+                | Array<{ sha: string }>
+                | undefined;
+
+              // If commits not in payload, try to get from compare API using head and before
               if (!Array.isArray(commits) || commits.length === 0) {
-                continue;
+                // @ts-ignore
+                const head = payload?.head;
+                // @ts-ignore
+                const before = payload?.before;
+
+                if (head && before) {
+                  try {
+                    // Use compare API to get commits between before and head
+                    const compareData = await octokit.request(
+                      'GET /repos/{owner}/{repo}/compare/{basehead}',
+                      {
+                        owner: repoOwner,
+                        repo: repoName,
+                        basehead: `${before}...${head}`,
+                      },
+                    );
+                    commits = compareData.data.commits || [];
+                    console.log(
+                      `Found ${commits.length} commits via compare API for ${event.repo.name}`,
+                    );
+                  } catch (compareError) {
+                    console.warn(
+                      `Failed to compare commits for ${event.repo.name}:`,
+                      compareError,
+                    );
+                    continue;
+                  }
+                } else {
+                  continue;
+                }
               }
+
               for (const commit of commits) {
                 try {
+                  // @ts-ignore
+                  const sha: string =
+                    typeof commit === 'string' ? commit : commit.sha;
                   const commitData = await octokit.request(
                     'GET /repos/{owner}/{repo}/commits/{ref}',
                     {
-                      owner: event.repo.name.split('/')[0],
-                      repo: event.repo.name.split('/')[1],
-                      ref: commit.sha,
+                      owner: repoOwner,
+                      repo: repoName,
+                      ref: sha,
                     },
                   );
                   const stats = commitData.data.stats;
@@ -110,7 +154,13 @@ class Generator {
                   dailyCodeChanges[dateStr].additions += stats?.additions ?? 0;
                   dailyCodeChanges[dateStr].deletions += stats?.deletions ?? 0;
                 } catch (commitError) {
-                  console.warn(`Failed to fetch commit ${commit.sha}:`, commitError);
+                  // @ts-ignore
+                  const commitId =
+                    typeof commit === 'string' ? commit : commit.sha;
+                  console.warn(
+                    `Failed to fetch commit ${commitId}:`,
+                    commitError,
+                  );
                 }
               }
             } else if (eventDate.isBefore(startDate)) {
