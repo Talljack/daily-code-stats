@@ -20,15 +20,21 @@ export type DailyCodeInfo = {
 const getUserInputs = () => {
   const additionCodeLabel = getInput('additionCodeLabel');
   const deletionCodeLabel = getInput('deletionCodeLabel');
-  const startDate =
-    getInput('startDate') || moment().subtract(1, 'days').format('YYYY-MM-DD');
-  const endDate =
-    getInput('endDate') || moment().subtract(1, 'days').format('YYYY-MM-DD');
+  // Get timezone offset in hours (default: +8 for Beijing/Shanghai)
+  const timezoneOffset = parseInt(getInput('timezoneOffset') || '8', 10);
+  // Calculate the current date in the specified timezone
+  const now = moment().utcOffset(timezoneOffset * 60);
+  // Default to yesterday in the specified timezone
+  const defaultDate = now.clone().subtract(1, 'days').format('YYYY-MM-DD');
+  const startDate = getInput('startDate') || defaultDate;
+  const endDate = getInput('endDate') || defaultDate;
+  console.log(`Timezone offset: UTC+${timezoneOffset}, Current time: ${now.format('YYYY-MM-DD HH:mm:ss')}, Target date: ${defaultDate}`);
   return {
     additionCodeLabel,
     deletionCodeLabel,
     startDate,
     endDate,
+    timezoneOffset,
   };
 };
 
@@ -61,12 +67,12 @@ class Generator {
 
   async getUserDailyCodeInfo() {
     const octokit = getOctokit(this.token);
-    const prevDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
     const username = this.owner;
     const startDate = this.userOptions.startDate;
     const endDate = this.userOptions.endDate;
+    // Initialize with the target date range
     const dailyCodeChanges = {
-      [prevDate]: { additions: 0, deletions: 0 },
+      [startDate]: { additions: 0, deletions: 0 },
     } as DailyCodeInfo['dailyCodeChanges'];
     try {
       let page = 1;

@@ -21,6 +21,10 @@ inputs:
   endDate:
     description: 'The end date of the daily code stats'
     required: false
+  timezoneOffset:
+    description: 'Timezone offset in hours (e.g., 8 for UTC+8 Beijing/Shanghai)'
+    required: false
+    default: '8'
 outputs:
   dailyCodeInfo:
     description: 'Daily Code Info include username, date, and code'
