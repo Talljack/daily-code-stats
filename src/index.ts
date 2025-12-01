@@ -82,21 +82,30 @@ class Generator {
             if (eventDate.isBetween(startDate, endDate, 'day', '[]')) {
               const dateStr = eventDate.format('YYYY-MM-DD');
               // @ts-ignore
-              for (const commit of event.payload.commits) {
-                const commitData = await octokit.request(
-                  'GET /repos/{owner}/{repo}/commits/{ref}',
-                  {
-                    owner: event.repo.name.split('/')[0],
-                    repo: event.repo.name.split('/')[1],
-                    ref: commit.sha,
-                  },
-                );
-                const stats = commitData.data.stats;
-                if (!dailyCodeChanges?.[dateStr]) {
-                  dailyCodeChanges[dateStr] = { additions: 0, deletions: 0 };
+              const commits = event.payload?.commits;
+              // Skip if commits is not an array or is empty
+              if (!Array.isArray(commits) || commits.length === 0) {
+                continue;
+              }
+              for (const commit of commits) {
+                try {
+                  const commitData = await octokit.request(
+                    'GET /repos/{owner}/{repo}/commits/{ref}',
+                    {
+                      owner: event.repo.name.split('/')[0],
+                      repo: event.repo.name.split('/')[1],
+                      ref: commit.sha,
+                    },
+                  );
+                  const stats = commitData.data.stats;
+                  if (!dailyCodeChanges?.[dateStr]) {
+                    dailyCodeChanges[dateStr] = { additions: 0, deletions: 0 };
+                  }
+                  dailyCodeChanges[dateStr].additions += stats?.additions ?? 0;
+                  dailyCodeChanges[dateStr].deletions += stats?.deletions ?? 0;
+                } catch (commitError) {
+                  console.warn(`Failed to fetch commit ${commit.sha}:`, commitError);
                 }
-                dailyCodeChanges[dateStr].additions += stats?.additions ?? 0;
-                dailyCodeChanges[dateStr].deletions += stats?.deletions ?? 0;
               }
             } else if (eventDate.isBefore(startDate)) {
               keepGoing = false;
