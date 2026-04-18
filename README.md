@@ -69,6 +69,6 @@ Licensed under the [MIT License](LICENSE).
 
 | Date       | Addition Codes | Deletion Codes |
 |------------|-----------|-----------|
-| 2026-04-16 | 10335 | 1494 |
+| 2026-04-17 | 38 | 46 |
 
 <!-- END_STATS -->
