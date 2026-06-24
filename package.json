@@ -21,7 +21,7 @@
     "@vercel/ncc": "^0.38.1",
     "bun-types": "latest",
     "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-import": "^2.29.1",
     "prettier": "^3.2.5",
